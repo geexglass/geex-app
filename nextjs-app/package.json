@@ -1,5 +1,5 @@
 {
-  "name": "nextjs-app",
+  "name": "geex-nextjs",
   "private": true,
   "scripts": {
     "predev": "npm run typegen",

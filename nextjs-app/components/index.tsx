@@ -1,26 +1,28 @@
 import Image from 'next/image'
-import {ClassNameValue, twMerge} from 'tailwind-merge'
+import { ClassNameValue, twMerge } from 'tailwind-merge'
+import React from 'react'
 
-// Z
-
-// export const EventHero = (gEvent: GEventPayload) => {
-//   return (
-//     <div>
-//       <h2>{gEvent.name}</h2>
-//       <span>{gEvent.start}</span>
-//       <span>{gEvent.end}</span>
-//       <span>{gEvent.venue}</span>
-//     </div>
-//   )
-// }
-
-export const Row = ({ justify = 'justify-between', children }) => (
+export const Row = ({
+  justify = 'justify-between',
+  children,
+}: {
+  justify?: string
+  children: React.ReactNode
+}) => (
   <div className={`flex ${justify} gap-4 flex-wrap md:flex-nowrap`}>
     {children}
   </div>
 )
 
-export const Card = ({ className = '', fullHeight = true, children }) => (
+export const Card = ({
+  className = '',
+  fullHeight = true,
+  children,
+}: {
+  className?: string
+  fullHeight?: boolean
+  children: React.ReactNode
+}) => (
   <div
     style={{ borderRadius: '20px' }}
     className={twMerge(
@@ -32,7 +34,15 @@ export const Card = ({ className = '', fullHeight = true, children }) => (
   </div>
 )
 
-export const Chip = ({ className = '', large = false, children }) => (
+export const Chip = ({
+  className = '',
+  large = false,
+  children,
+}: {
+  className?: string
+  large?: boolean
+  children: React.ReactNode
+}) => (
   <div
     className={twMerge(
       'p-3 rounded-[40px] aspect-square object-fill',
@@ -43,7 +53,13 @@ export const Chip = ({ className = '', large = false, children }) => (
   </div>
 )
 
-export const ChipSmall = ({ className = '', children }) => (
+export const ChipSmall = ({
+  className = '',
+  children,
+}: {
+  className?: string
+  children: React.ReactNode
+}) => (
   <div
     style={{ minWidth: '75px', width: '75px', height: '75px' }}
     className={twMerge('p-3 rounded-lg aspect-square', className)}
@@ -52,7 +68,13 @@ export const ChipSmall = ({ className = '', children }) => (
   </div>
 )
 
-export const TwoColumn = ({ className = '', children }) => (
+export const TwoColumn = ({
+  className = '',
+  children,
+}: {
+  className?: string
+  children: React.ReactNode
+}) => (
   <div
     className={twMerge(
       'grid grid-cols-1 gap-5 grid-flow-row md:grid-flow-col pb-2 md:grid-cols-2',
@@ -63,7 +85,13 @@ export const TwoColumn = ({ className = '', children }) => (
   </div>
 )
 
-export const ThreeColumn = ({ className = '', children }) => (
+export const ThreeColumn = ({
+  className = '',
+  children,
+}: {
+  className?: string
+  children: React.ReactNode
+}) => (
   <div
     className={twMerge(
       'grid grid-flow-row sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 lg:grid-flow-col pb-2',
@@ -75,11 +103,16 @@ export const ThreeColumn = ({ className = '', children }) => (
 )
 
 export const GeexButton = ({
-                             className = '',
-                             halfWidth = false,
-                             primary = false,
-                             children,
-                           }) => (
+  className = '',
+  halfWidth = false,
+  primary = false,
+  children,
+}: {
+  className?: string
+  halfWidth?: boolean
+  primary?: boolean
+  children: React.ReactNode
+}) => (
   <button
     className={twMerge(
       `${halfWidth ? 'w-[50%]' : 'w-auto'} ${
@@ -100,11 +133,11 @@ interface ObjectNodeProps {
 }
 
 export const ObjectNode = ({
-         image,
-         imageAlt,
-         className = '',
-         children,
-       }: ObjectNodeProps) => (
+  image,
+  imageAlt,
+  className = '',
+  children,
+}: ObjectNodeProps) => (
   <div className={twMerge('flex flex-col gap-2', `${className}`)}>
     <Chip large className={'bg-geexGray p-4 mb-auto'}>
       {image ? <Image src={image} alt={imageAlt || ''} /> : <div>image</div>}
@@ -120,10 +153,10 @@ interface ObjectNodeSmallProps {
 }
 
 export const ObjectNodeSmall = ({
-      image,
-      className = '',
-      children,
-    }: ObjectNodeSmallProps) => (
+  image,
+  className = '',
+  children,
+}: ObjectNodeSmallProps) => (
   <div className={twMerge('flex gap-5', `${className}`)}>
     <ChipSmall className={'bg-geexGray p-2'}>image</ChipSmall>
     {children}
