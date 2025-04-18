@@ -21,7 +21,7 @@
     "next": "^15.3.0",
     "next-sanity": "^9.10.2",
     "react": "^19.1.0",
-    "react-dom": "^19.0.0",
+    "react-dom": "^19.1.0",
     "sanity": "^3.85.1",
     "sonner": "^1.7.0",
     "styled-components": "^6.1.13"
@@ -29,7 +29,7 @@
   "devDependencies": {
     "typescript": "5.8.3",
     "eslint": "^8.57.0",
-    "@types/react-dom": "^18.3.5",
+    "@types/react-dom": "^19.1.2",
     "@types/node": "^20.17.17",
     "@types/react": "^19.1.2",
     "eslint-config-next": "^15.1.6",
