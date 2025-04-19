@@ -1,0 +1,36 @@
+name: Deploy to Dev WS
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout repo (for workflow files, optional)
+        uses: actions/checkout@v3
+
+      - name: Set up SSH key for gateway/WS hop
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.DEV_SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+
+      - name: Add gateway & WS to known_hosts
+        run: |
+          ssh-keyscan -p 22 ${{ secrets.DEV_GATEWAY_IP }} >> ~/.ssh/known_hosts
+          ssh-keyscan -p 22 ${{ secrets.DEV_WS_IP }}      >> ~/.ssh/known_hosts
+
+      - name: Run remote deploy via gateway
+        env:
+          GATEWAY: ${{ secrets.DEV_GATEWAY_IP }}
+          WS:      ${{ secrets.DEV_WS_IP }}
+        run: |
+          # ProxyJump through gateway into WS, run our deploy script
+          ssh -o StrictHostKeyChecking=yes \
+              -J opc@$GATEWAY:22 \
+              opc@$WS:22 \
+            'bash -s' < deploy-dev.sh "/home/opc/app" "dev"
