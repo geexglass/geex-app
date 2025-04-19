@@ -22,12 +22,14 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Build Next.js app
+        if: ${{ github.event_name == 'push' }}
         run: npm run build --workspace=nextjs-app
         env:
           NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.SANITY_PROJECT_ID }}
           NEXT_PUBLIC_SANITY_DATASET: ${{ vars.SANITY_DEV_DATASET }}
           SANITY_API_READ_TOKEN: ${{ secrets.SANITY_API_READ_TOKEN }}
       - name: Build Studio
+        if: ${{ github.event_name == 'push' }}
         run: npm run build --workspace=studio
         env:
           SANITY_STUDIO_PROJECT_ID: ${{ secrets.SANITY_PROJECT_ID }}
