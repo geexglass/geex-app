@@ -28,6 +28,8 @@ jobs:
           NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.SANITY_PROJECT_ID }}
           NEXT_PUBLIC_SANITY_DATASET: ${{ vars.SANITY_DEV_DATASET }}
           SANITY_API_READ_TOKEN: ${{ secrets.SANITY_API_READ_TOKEN }}
+      - name: Lint Next.js app
+        run: npm run lint --workspace=nextjs-app
       - name: Build Studio
         if: ${{ github.event_name == 'push' }}
         run: npm run build --workspace=studio
