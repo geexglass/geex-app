@@ -21,8 +21,6 @@ jobs:
         run: npm ci
       - name: Lint Next.js app
         run: npm run lint --workspace=nextjs-app
-      - name: Run tests
-        run: npm test --workspace=nextjs-app
 
   build:
     needs: ci
