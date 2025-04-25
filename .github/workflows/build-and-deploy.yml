@@ -1,4 +1,4 @@
-name: Build
+name: Build And Deploy
 
 on:
   push:
@@ -80,3 +80,32 @@ jobs:
           build-args: |
             SANITY_PROJECT_ID=${{ secrets.SANITY_PROJECT_ID }}
             SANITY_DATASET=${{ vars.SANITY_DEV_DATASET }}
+
+#    deploy:
+#      runs-on: ubuntu-latest
+#      needs:
+#        - build-nextjs
+#        - build-studio
+#        - build-nextjs-docker
+#        - build-sanity-studio-docker
+#      if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/dev'
+#      steps:
+#        - name: Set up SSH key
+#          uses: webfactory/ssh-agent@v0.8.1
+#          with:
+#            ssh-private-key: ${{ secrets.DEPLOY_SSH_KEY }}
+#
+#        - name: Add server to known_hosts
+#          run: |
+#            mkdir -p ~/.ssh
+#            echo "${{ secrets.KNOWN_HOSTS }}" >> ~/.ssh/known_hosts
+#
+#        - name: Deploy to server
+#          run: |
+#            ssh ${{ secrets.SSH_USER }}@${{ github.ref == 'refs/heads/main' && secrets.PROD_HOST || secrets.DEV_HOST }} << 'EOF'
+#              cd /path/to/your/app
+#              git fetch --all
+#              git checkout ${{ github.ref_name }}
+#              git pull origin ${{ github.ref_name }}
+#              docker compose up --build -d
+#            EOF
