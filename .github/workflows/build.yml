@@ -1,4 +1,4 @@
-name: Node.js CI
+name: Build
 
 on:
   push:
@@ -78,5 +78,5 @@ jobs:
           file: ./studio/Dockerfile
           push: false
           build-args: |
-            SANITY_STUDIO_PROJECT_ID=${{ secrets.SANITY_PROJECT_ID }}
-            SANITY_STUDIO_DATASET=${{ vars.SANITY_DEV_DATASET }}
+            SANITY_PROJECT_ID=${{ secrets.SANITY_PROJECT_ID }}
+            SANITY_DATASET=${{ vars.SANITY_DEV_DATASET }}
