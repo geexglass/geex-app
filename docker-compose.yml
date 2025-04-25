@@ -1,0 +1,23 @@
+services:
+  app:
+    build:
+      dockerfile: nextjs-app/Dockerfile
+      args:
+        SANITY_PROJECT_ID: ${SANITY_PROJECT_ID}
+        SANITY_DATASET: ${SANITY_DATASET}
+        SANITY_API_READ_TOKEN: ${SANITY_API_READ_TOKEN}
+    environment:
+      NEXT_PUBLIC_SANITY_PROJECT_ID: ${SANITY_PROJECT_ID}
+      NEXT_PUBLIC_SANITY_DATASET: ${SANITY_DATASET}
+      SANITY_API_READ_TOKEN: ${SANITY_API_READ_TOKEN}
+    ports:
+      - "3000:3000"
+
+  studio:
+    build:
+      dockerfile: studio/Dockerfile
+      args:
+        SANITY_PROJECT_ID: ${SANITY_PROJECT_ID}
+        SANITY_DATASET: ${SANITY_DATASET}
+    ports:
+      - "3333:80"
