@@ -1,0 +1,82 @@
+name: Node.js CI
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+
+jobs:
+  build-nextjs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js 22.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.x
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm ci
+      - name: Build Next.js App
+        run: npm run build --workspace=nextjs-app
+        env:
+          NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.SANITY_PROJECT_ID }}
+          NEXT_PUBLIC_SANITY_DATASET: ${{ vars.SANITY_DEV_DATASET }}
+          SANITY_API_READ_TOKEN: ${{ secrets.SANITY_API_READ_TOKEN }}
+
+  build-studio:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js 22.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.x
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm ci
+      - name: Build Sanity Studio
+        run: npm run build --workspace=studio
+        env:
+          SANITY_STUDIO_PROJECT_ID: ${{ secrets.SANITY_PROJECT_ID }}
+          SANITY_STUDIO_DATASET: ${{ vars.SANITY_DEV_DATASET }}
+
+  build-nextjs-docker:
+    runs-on: ubuntu-latest
+    needs: build-nextjs
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Build Next.js Image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./nextjs-app/Dockerfile
+          push: false
+          build-args: |
+            SANITY_PROJECT_ID=${{ secrets.SANITY_PROJECT_ID }}
+            SANITY_DATASET=${{ vars.SANITY_DEV_DATASET }}
+            SANITY_API_READ_TOKEN=${{ secrets.SANITY_API_READ_TOKEN }}
+
+  build-sanity-studio-docker:
+    runs-on: ubuntu-latest
+    needs: build-studio
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Build Sanity Studio Image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./studio/Dockerfile
+          push: false
+          build-args: |
+            SANITY_STUDIO_PROJECT_ID=${{ secrets.SANITY_PROJECT_ID }}
+            SANITY_STUDIO_DATASET=${{ vars.SANITY_DEV_DATASET }}
