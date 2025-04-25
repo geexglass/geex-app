@@ -56,7 +56,7 @@ export default defineConfig({
     // Presentation tool configuration for Visual Editing
     presentationTool({
       previewUrl: {
-        origin: SANITY_STUDIO_PREVIEW_URL,
+        initial: SANITY_STUDIO_PREVIEW_URL,
         previewMode: {
           enable: '/api/draft-mode/enable',
         },
