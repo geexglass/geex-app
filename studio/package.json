@@ -16,7 +16,7 @@
     "sanity"
   ],
   "dependencies": {
-    "@sanity/assist": "^4.0.2",
+    "@sanity/assist": "^4.1.0",
     "@sanity/icons": "^3.5.0",
     "@sanity/vision": "^3.86.1",
     "date-fns": "^3.6.0",
