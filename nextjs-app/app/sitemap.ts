@@ -23,7 +23,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   });
 
   if (allPostsAndPages != null && allPostsAndPages.data.length != 0) {
-    let priority: number;
+    let priority: number = 0.1
     let changeFrequency:
       | "monthly"
       | "always"
@@ -36,16 +36,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     let url: string;
 
     for (const p of allPostsAndPages.data) {
+      url = `${domain}/${p.slug}`;
       switch (p._type) {
         case "page":
           priority = 0.8;
           changeFrequency = "monthly";
-          url = `${domain}/${p.slug}`;
           break;
         case "post":
           priority = 0.5;
           changeFrequency = "never";
-          url = `${domain}/posts/${p.slug}`;
           break;
       }
       sitemap.push({
