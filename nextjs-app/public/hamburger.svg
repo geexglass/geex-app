@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="84" height="68" viewBox="0 0 84 68">
+    <g id="Group_35" transform="translate(-377 -29)">
+        <g id="Rectangle_1" transform="translate(377 29)" fill="#fff" stroke="#1079b5" stroke-width="4">
+            <rect width="84" height="20" rx="10" stroke="none"/>
+            <rect x="2" y="2" width="80" height="16" rx="8" fill="none"/>
+        </g>
+        <g id="Rectangle_2" transform="translate(377 53)" fill="#fff" stroke="#1079b5" stroke-width="4">
+            <rect width="84" height="20" rx="10" stroke="none"/>
+            <rect x="2" y="2" width="80" height="16" rx="8" fill="none"/>
+        </g>
+        <g id="Rectangle_3" transform="translate(377 77)" fill="#fff" stroke="#1079b5" stroke-width="4">
+            <rect width="84" height="20" rx="10" stroke="none"/>
+            <rect x="2" y="2" width="80" height="16" rx="8" fill="none"/>
+        </g>
+    </g>
+</svg>
