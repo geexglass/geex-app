@@ -29,24 +29,24 @@ export default function Navbar() {
           <SearchBox />
           <div
             className={
-              'flex flex-col justify-between font-bold md:block'
+              'flex flex-col justify-between font-bold'
             }
           >
             <Image
-              className={'m-auto'}
+              className={'m-auto h-12'}
               width={40}
               height={60}
-              src={'/login.svg'}
-              alt=""
+              src={'/icons/login.svg'}
+              alt={authAction}
             />
             <span className="text-sm text-center uppercase hidden md:inline">{authAction}</span>
           </div>
           <div className={'flex flex-col justify-between font-bold'}>
             <Image
-              className={'m-auto'}
-              width={50}
+              className={'m-auto h-12'}
               height={60}
-              src={'/hamburger.svg'}
+              width={50}
+              src={'/icons/hamburger.svg'}
               alt=""
             />
             <span className="text-sm text-center uppercase hidden md:inline">Menu</span>

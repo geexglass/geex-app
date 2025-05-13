@@ -20,13 +20,12 @@ const SearchBox = () => {
         onChange={handleSearch}
       />
       <button
-        className={`bg-white border-4 p-2 font-bold h-full md:hidden`}
-        style={{ borderRadius: '20px' }}
+        className={`bg-white border-4 p-2 font-bold h-full md:hidden rounded-3xl`}
       >
-        <Image src={'/search.svg'} width={30} height={30} alt={''} />
+        <Image src={'/icons/search.svg'} width={30} height={30} alt={''} />
       </button>
       <div className={'absolute top-3.5 right-4 hidden md:block'}>
-        <Image src={'/search.svg'} width={40} height={40} alt={''} />
+        <Image src={'/icons/search.svg'} width={40} height={40} alt={''} />
       </div>
     </div>
   )
