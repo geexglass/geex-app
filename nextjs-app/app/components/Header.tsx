@@ -39,7 +39,7 @@ export default function Navbar() {
               src={'/login.svg'}
               alt=""
             />
-            <span className="uppercase">{authAction}</span>
+            <span className="uppercase hidden md:inline">{authAction}</span>
           </div>
           <div className={'flex flex-col justify-between font-bold'}>
             <Image
@@ -49,6 +49,7 @@ export default function Navbar() {
               src={'/hamburger.svg'}
               alt=""
             />
+            <span className="uppercase hidden md:inline">Menu</span>
           </div>
         </div>
         {/*{menuItems &&*/}
