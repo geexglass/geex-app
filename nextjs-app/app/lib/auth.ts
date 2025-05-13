@@ -1,5 +1,6 @@
 import { betterAuth } from "better-auth";
 import { Pool } from "pg";
+import {admin, organization} from "better-auth/plugins";
 
 const POSTGRES_USER = process.env.POSTGRES_USER;
 const POSTGRES_PASSWORD = process.env.POSTGRES_PASSWORD;
@@ -19,4 +20,8 @@ export const auth = betterAuth({
     database: new Pool({
         connectionString: postgresUrl
     }),
+    plugins: [
+        admin(),
+        organization()
+    ]
 })

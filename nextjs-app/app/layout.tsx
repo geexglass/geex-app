@@ -15,6 +15,7 @@ import { sanityFetch, SanityLive } from "@/sanity/lib/live";
 import { settingsQuery } from "@/sanity/lib/queries";
 import { resolveOpenGraphImage } from "@/sanity/lib/utils";
 import { handleError } from "./client-utils";
+import { seedAdmin } from "./lib/seed-admin";
 
 /**
  * Generate metadata for the page.
@@ -62,6 +63,8 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  await seedAdmin(); // Seed the admin user if it doesn't exist
+
   const { isEnabled: isDraftMode } = await draftMode();
 
   return (
