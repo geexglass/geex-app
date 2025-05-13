@@ -1,17 +1,24 @@
+'use client'
+
 import Image from 'next/image'
-import Link from 'next/link'
-// import type { MenuItem, SettingsPayload } from 'types'
 
 import SearchBox from './SearchBox'
-import {linkResolver} from "@/sanity/lib/utils";
+import {authClient} from "@/app/lib/auth-client";
 
 export default function Navbar() {
+
+  const session = authClient.useSession()
+  const { data } = session
+
+  const isLoggedIn = data && data.user
+
+  const authAction = isLoggedIn ? 'Log Out' : 'Log In'
 
   // todo: use sanity generated types
   // const menuItems = data?.menuItems || ([] as any[])
   return (
     <div className={'bg-white'}>
-      <div className="m-auto sticky top-0 z-10 flex flex-wrap items-center gap-x-5 bg-white py-5 px-4 md:px-16 lg:px-40 m-auto max-w-[1600px] justify-between">
+      <div className="m-auto sticky top-0 z-10 flex flex-wrap items-center gap-x-5 bg-white py-5 px-4 md:px-16 lg:px-40 max-w-[1600px] justify-between">
         <Image
           src={'/geex_logo_500px.webp'}
           width={170}
@@ -22,7 +29,7 @@ export default function Navbar() {
           <SearchBox />
           <div
             className={
-              'flex flex-col justify-between font-bold hidden md:block'
+              'flex flex-col justify-between font-bold md:block'
             }
           >
             <Image
@@ -32,7 +39,7 @@ export default function Navbar() {
               src={'/login.svg'}
               alt=""
             />
-            log out
+            <span className="uppercase">{authAction}</span>
           </div>
           <div className={'flex flex-col justify-between font-bold'}>
             <Image
