@@ -15,7 +15,7 @@ import { sanityFetch, SanityLive } from "@/sanity/lib/live";
 import { settingsQuery } from "@/sanity/lib/queries";
 import { resolveOpenGraphImage } from "@/sanity/lib/utils";
 import { handleError } from "./client-utils";
-import { seedAdmin } from "./lib/seed-admin";
+import { seedAdmin } from "@/lib/seed-admin";
 
 /**
  * Generate metadata for the page.
