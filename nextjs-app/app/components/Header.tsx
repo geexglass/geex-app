@@ -37,7 +37,7 @@ export default function Navbar() {
   return (
     <div className={'bg-white'}>
       <div className="m-auto sticky top-0 z-10 flex flex-wrap items-center gap-x-5 bg-white py-5 px-4 md:px-16 lg:px-40 max-w-[1600px] justify-between">
-        <Link href="/nextjs-app/public">
+        <Link href="/">
           <Image
             src={'/geex_logo_500px.webp'}
             width={170}
