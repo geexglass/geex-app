@@ -20,6 +20,12 @@ export const auth = betterAuth({
     database: new Pool({
         connectionString: postgresUrl
     }),
+    session: {
+        cookieCache: {
+            enabled: true,
+            maxAge: 60 * 60, // 1 hour
+        }
+    },
     plugins: [
         admin(),
         organization({
