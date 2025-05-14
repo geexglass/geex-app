@@ -22,6 +22,8 @@ export const auth = betterAuth({
     }),
     plugins: [
         admin(),
-        organization()
+        organization({
+            allowUserToCreateOrganization: false,
+        })
     ]
 })
