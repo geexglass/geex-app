@@ -4,16 +4,15 @@ import { getSessionCookie } from "better-auth/cookies";
 export async function middleware(request: NextRequest) {
     const sessionCookie = getSessionCookie(request);
 
-    // If no session cookie is found, redirect to sign-in page
     if (!sessionCookie) {
-        return NextResponse.redirect(new URL("/sign-in", request.url));
+        return NextResponse.redirect(new URL("/sign-in", request.url)); // Force login
     }
 
-    return NextResponse.next();
+    return NextResponse.next(); // Continue to the requested page
 }
 
 export const config = {
     matcher: [
-        "/admin/:path*", // Protect all admin routes
+        "/admin/:path*", // Guard admin routes
     ],
 };
