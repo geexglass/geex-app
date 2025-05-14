@@ -45,11 +45,9 @@ export default function Navbar() {
             alt={'GEEX Glass Education Exchange'}
           />
         </Link>
-        <div className={'flex gap-4 text-geexGrayDark'}>
+        <div className={'flex items-center gap-5 text-geexGrayDark'}>
           <SearchBox />
-          <div
-            className={'flex flex-col justify-between font-bold'}
-          >
+          <div className={'flex flex-col justify-between font-bold'}>
             <Image
               className={'m-auto h-12'}
               width={40}

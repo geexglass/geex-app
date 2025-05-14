@@ -12,8 +12,7 @@ const SearchBox = () => {
   return (
     <div className={'relative'}>
       <input
-        className={`border border-4 border-geexGray p-3 px-4 font-bold h-full hidden md:block`}
-        style={{ borderRadius: '20px' }}
+        className='hidden md:block border-4 border-geexGray font-bold w-80 h-16 px-4 rounded-[20px]'
         type="text"
         placeholder="Search"
         value={searchTerm}
@@ -24,8 +23,8 @@ const SearchBox = () => {
       >
         <Image src={'/icons/search.svg'} width={30} height={30} alt={''} />
       </button>
-      <div className={'absolute top-3.5 right-4 hidden md:block'}>
-        <Image src={'/icons/search.svg'} width={40} height={40} alt={''} />
+      <div className={'absolute top-4 right-4 hidden md:block'}>
+        <Image src={'/icons/search.svg'} width={32} height={32} alt={''} />
       </div>
     </div>
   )
