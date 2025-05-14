@@ -4,7 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
-import SearchBox from '@/components/SearchBox'
+import SearchBox from '@/app/components/SearchBox'
 import {authClient} from "@/lib/auth-client";
 import { toast } from 'sonner';
 
