@@ -3,6 +3,7 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import Link from "next/link";
 
 export function ForgotPasswordForm({
   className,
@@ -56,19 +57,11 @@ export function ForgotPasswordForm({
         </div>
       ) : (
         <div className="grid gap-6">
-          <Button 
-            type="button" 
-            variant="outline" 
-            className="w-full"
-            onClick={() => window.location.href = "/sign-in"}
-          >
-            Back to Sign In
-          </Button>
           <div className="text-center text-sm">
             Remember your password?{" "}
-            <a href="/sign-in" className="underline underline-offset-4">
+            <Link href="/sign-in" className="underline underline-offset-4">
               Sign in
-            </a>
+            </Link>
           </div>
         </div>
       )}
