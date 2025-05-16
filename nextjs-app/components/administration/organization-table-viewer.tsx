@@ -13,6 +13,7 @@ import {Button} from "@/components/ui/button";
 import {CreateOrganizationDialog} from "@/components/administration/create-organization-dialog";
 import {OrganizationTable} from "@/components/administration/organization-table";
 import {Organization} from "better-auth/plugins";
+import {TableProperties} from "lucide-react";
 
 interface OrganizationTableViewerProps {
     organizations: Organization[]
@@ -45,8 +46,11 @@ export default function OrganizationTableViewer({ organizations }: OrganizationT
                 <div className="ml-auto flex items-center space-x-2">
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                            <Button variant="outline">
-                                Columns
+                            <Button
+                                variant="outline"
+                                className="h-10 w-10 p-0 inline-flex items-center justify-center"
+                            >
+                                <TableProperties/>
                             </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">

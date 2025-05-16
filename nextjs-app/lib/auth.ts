@@ -30,9 +30,7 @@ export const auth = betterAuth({
     plugins: [
         nextCookies(),
         admin(),
-        organization({
-            allowUserToCreateOrganization: false,
-        }),
+        organization({}),
         haveIBeenPwned({
             customPasswordCompromisedMessage: "Please choose a more secure password."
         })
