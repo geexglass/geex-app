@@ -214,7 +214,7 @@ export function OrganizationTable({ data }: OrganizationTableProps) {
                     className="capitalize"
                     checked={column.getIsVisible()}
                     onCheckedChange={(value) =>
-                      column.toggleVisibility(!!value)
+                      column.toggleVisibility(value)
                     }
                   >
                     {column.id}
