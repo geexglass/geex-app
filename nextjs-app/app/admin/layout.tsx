@@ -11,5 +11,5 @@ export default async function AdminLayout({ children }: { children: ReactNode })
     if (!session) unauthorized() // Middleware should handle this, but just in case
     if (session.user.role !== "admin") forbidden();
 
-    return children;
+    return <>{children}</>;
 }

@@ -18,8 +18,7 @@ import {
   ChevronRightIcon,
   ChevronsLeftIcon,
   ChevronsRightIcon,
-  EllipsisVertical,
-  PlusIcon
+  EllipsisVertical
 } from "lucide-react"
 import { z } from "zod"
 
@@ -50,16 +49,7 @@ import {
 } from "@/components/ui/select"
 import {Checkbox} from "@/components/ui/checkbox";
 import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog"
-import { Label } from "@/components/ui/label";
+import {Organization} from "better-auth/plugins";
 
 // Define the organization schema
 export const organizationSchema = z.object({
@@ -70,8 +60,6 @@ export const organizationSchema = z.object({
   createdAt: z.date(),
 })
 
-export type Organization = z.infer<typeof organizationSchema>
-
 // Function to convert a string to kebab case
 function toKebabCase(str: string): string {
   return str
@@ -80,91 +68,9 @@ function toKebabCase(str: string): string {
     .replace(/[^a-z0-9-]/g, '');
 }
 
-// Create Organization Dialog Component
-function CreateOrganizationDialog() {
-  const [name, setName] = React.useState("");
-  const [handle, setHandle] = React.useState("");
-  const [open, setOpen] = React.useState(false);
-
-  // Update handle when name changes
-  const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newName = event.target.value;
-    setName(newName);
-    setHandle(toKebabCase(newName));
-  };
-
-  // Handle handle change
-  const handleHandleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setHandle(event.target.value);
-  };
-
-  // Handle form submission
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
-    // Here you would typically call an API to create the organization
-    console.log("Creating organization:", { name, handle });
-    // Reset form and close dialog
-    setName("");
-    setHandle("");
-    setOpen(false);
-  };
-
-  return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button variant="outline" className="ml-2">
-          <PlusIcon className="h-4 w-4 mr-2" />
-          New Organization
-        </Button>
-      </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
-        <form onSubmit={handleSubmit}>
-          <DialogHeader>
-            <DialogTitle>Create Organization</DialogTitle>
-            <DialogDescription>
-              Create a new organization. The handle will be used in URLs.
-            </DialogDescription>
-          </DialogHeader>
-          <div className="grid gap-4 py-4">
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="name" className="text-right">
-                Name
-              </Label>
-              <Input 
-                id="name" 
-                value={name} 
-                onChange={handleNameChange} 
-                className="col-span-3" 
-                placeholder="My Organization"
-                required
-              />
-            </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="handle" className="text-right">
-                Handle
-              </Label>
-              <Input 
-                id="handle" 
-                value={handle} 
-                onChange={handleHandleChange} 
-                className="col-span-3" 
-                placeholder="my-organization"
-                required
-              />
-            </div>
-          </div>
-          <DialogFooter>
-            <Button type="submit">Create Organization</Button>
-          </DialogFooter>
-        </form>
-      </DialogContent>
-    </Dialog>
-  );
-}
 
 // Define the columns for the organization table
 export const columns: ColumnDef<Organization>[] = [
-
   {
     accessorKey: "logo",
     header: "Logo",
@@ -236,12 +142,20 @@ export const columns: ColumnDef<Organization>[] = [
 
 interface OrganizationTableProps {
   data: Organization[]
+  columnFilters: ColumnFiltersState
+  setColumnFilters: React.Dispatch<React.SetStateAction<ColumnFiltersState>>
+  columnVisibility: VisibilityState
+  setColumnVisibility: React.Dispatch<React.SetStateAction<VisibilityState>>
 }
 
-export function OrganizationTable({ data }: OrganizationTableProps) {
+export function OrganizationTable({ 
+  data, 
+  columnFilters, 
+  setColumnFilters, 
+  columnVisibility, 
+  setColumnVisibility 
+}: OrganizationTableProps) {
   const [sorting, setSorting] = React.useState<SortingState>([])
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
-  const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
   const [rowSelection, setRowSelection] = React.useState({})
   const [pagination, setPagination] = React.useState({
     pageIndex: 0,
@@ -297,45 +211,6 @@ export function OrganizationTable({ data }: OrganizationTableProps) {
 
   return (
     <div className="w-full">
-      <div className="flex items-center py-4">
-        <Input
-          placeholder="Filter organizations..."
-          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("name")?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm"
-        />
-        <div className="ml-auto flex items-center space-x-2">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline">
-                Columns
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              {table
-                .getAllColumns()
-                .filter((column) => column.getCanHide())
-                .map((column) => {
-                  return (
-                    <DropdownMenuCheckboxItem
-                      key={column.id}
-                      className="capitalize"
-                      checked={column.getIsVisible()}
-                      onCheckedChange={(value) =>
-                        column.toggleVisibility(value)
-                      }
-                    >
-                      {column.id}
-                    </DropdownMenuCheckboxItem>
-                  )
-                })}
-            </DropdownMenuContent>
-          </DropdownMenu>
-          <CreateOrganizationDialog />
-        </div>
-      </div>
       <div className="rounded-md border">
         <Table>
           <TableHeader>
