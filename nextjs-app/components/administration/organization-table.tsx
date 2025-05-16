@@ -13,7 +13,13 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table"
-import { ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon, ChevronsLeftIcon, ChevronsRightIcon } from "lucide-react"
+import {
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  ChevronsLeftIcon,
+  ChevronsRightIcon,
+  EllipsisVertical
+} from "lucide-react"
 import { z } from "zod"
 
 import { Button } from "@/components/ui/button"
@@ -63,10 +69,12 @@ export const columns: ColumnDef<Organization>[] = [
     header: "Logo",
     cell: ({ row }) => {
       const logo = row.getValue("logo") as string | undefined
+      const name = row.getValue("name") as string
+      const fallback = name.charAt(0).toUpperCase()
       return (
           <Avatar>
             {logo && <AvatarImage src={logo} alt="Logo" />}
-            <AvatarFallback>{row.getValue("namee")}</AvatarFallback>
+            <AvatarFallback>{fallback}</AvatarFallback>
           </Avatar>
       );
     },
@@ -99,7 +107,7 @@ export const columns: ColumnDef<Organization>[] = [
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" className="h-8 w-8 p-0">
               <span className="sr-only">Open menu</span>
-              <ChevronDownIcon className="h-4 w-4" />
+              <EllipsisVertical className="h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
