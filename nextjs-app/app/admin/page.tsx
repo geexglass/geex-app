@@ -1,6 +1,6 @@
 "use client"
 
-import { OrganizationTable } from "@/components/organization-table"
+import { OrganizationTable } from "@/components/administration/organization-table"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 // Sample data for demonstration
