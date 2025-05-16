@@ -42,6 +42,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import {Checkbox} from "@/components/ui/checkbox";
+import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar";
 
 // Define the organization schema
 export const organizationSchema = z.object({
@@ -56,6 +57,20 @@ export type Organization = z.infer<typeof organizationSchema>
 
 // Define the columns for the organization table
 export const columns: ColumnDef<Organization>[] = [
+
+  {
+    accessorKey: "logo",
+    header: "Logo",
+    cell: ({ row }) => {
+      const logo = row.getValue("logo") as string | undefined
+      return (
+          <Avatar>
+            {logo && <AvatarImage src={logo} alt="Logo" />}
+            <AvatarFallback>{row.getValue("namee")}</AvatarFallback>
+          </Avatar>
+      );
+    },
+  },
   {
     accessorKey: "name",
     header: "Name",
@@ -65,24 +80,6 @@ export const columns: ColumnDef<Organization>[] = [
     accessorKey: "slug",
     header: "Slug",
     cell: ({ row }) => <div>{row.getValue("slug")}</div>,
-  },
-  {
-    accessorKey: "logo",
-    header: "Logo",
-    cell: ({ row }) => {
-      const logo = row.getValue("logo") as string | undefined
-      return logo ? (
-        <div className="flex items-center justify-center">
-          <img 
-            src={logo} 
-            alt={`${row.getValue("name")} logo`} 
-            className="h-8 w-8 rounded-full object-cover"
-          />
-        </div>
-      ) : (
-        <div className="text-center text-muted-foreground">No logo</div>
-      )
-    },
   },
   {
     accessorKey: "createdAt",
