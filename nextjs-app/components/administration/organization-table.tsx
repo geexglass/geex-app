@@ -100,32 +100,35 @@ export const columns: ColumnDef<Organization>[] = [
   {
     id: "actions",
     cell: ({ row }) => {
-      const organization = row.original
-      
+      const organization = row.original;
       return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <EllipsisVertical className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(organization.id)}
-            >
-              Copy ID
-            </DropdownMenuItem>
-            <DropdownMenuItem
-              onClick={() => window.location.href = `/admin/organization/${organization.slug}`}
-            >
-              View Details
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>Delete</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      )
+          <div className="w-full flex justify-end">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="h-8 w-8 p-0">
+                  <span className="sr-only">Open menu</span>
+                  <EllipsisVertical className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem
+                    onClick={() => navigator.clipboard.writeText(organization.id)}
+                >
+                  Copy ID
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                    onClick={() =>
+                        (window.location.href = `/admin/organization/${organization.slug}`)
+                    }
+                >
+                  View Details
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>Delete</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+      );
     },
   },
 ]

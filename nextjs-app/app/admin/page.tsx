@@ -37,8 +37,8 @@ const organizations = [
         id: "org-5",
         name: "Stark Industries",
         slug: "stark",
-        logo: "https://ui-avatars.com/api/?name=Stark+Industries&background=E74C3C&color=fff",
         createdAt: new Date("2023-05-12"),
+        logo: undefined
     },
 ]
 
