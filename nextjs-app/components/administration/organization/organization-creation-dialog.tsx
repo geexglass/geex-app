@@ -29,7 +29,7 @@ interface CreateOrganizationDialogProps {
   onOrganizationCreated?: (organization: Organization) => void;
 }
 
-export function CreateOrganizationDialog({ onOrganizationCreated }: CreateOrganizationDialogProps) {
+export function OrganizationCreationDialog({ onOrganizationCreated }: CreateOrganizationDialogProps) {
   const [name, setName] = React.useState("");
   const [handle, setHandle] = React.useState("");
   const [open, setOpen] = React.useState(false);

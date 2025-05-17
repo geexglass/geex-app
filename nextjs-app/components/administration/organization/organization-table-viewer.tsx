@@ -10,8 +10,8 @@ import {
     DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
 import {Button} from "@/components/ui/button";
-import {CreateOrganizationDialog} from "@/components/administration/create-organization-dialog";
-import {OrganizationTable} from "@/components/administration/organization-table";
+import {OrganizationCreationDialog} from "@/components/administration/organization/organization-creation-dialog";
+import {OrganizationTable} from "@/components/administration/organization/organization-table";
 import {Organization} from "better-auth/plugins";
 import {TableProperties} from "lucide-react";
 import { useEffect, useState } from "react";
@@ -39,7 +39,6 @@ export default function OrganizationTableViewer({ organizations }: OrganizationT
     return (
         <>
             <h2 className="text-xl font-semibold mb-4">Organizations</h2>
-
             <div className="flex items-center py-4">
                 <Input
                     placeholder="Filter organizations..."
@@ -86,7 +85,7 @@ export default function OrganizationTableViewer({ organizations }: OrganizationT
                             })}
                         </DropdownMenuContent>
                     </DropdownMenu>
-                    <CreateOrganizationDialog 
+                    <OrganizationCreationDialog
                         onOrganizationCreated={(newOrganization) => {
                             setOrganizationsState(prevOrganizations => [...prevOrganizations, newOrganization]);
                         }}

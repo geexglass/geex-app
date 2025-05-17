@@ -1,7 +1,7 @@
 'use client'
 
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs";
-import OrganizationTableViewer from "@/components/administration/organization-table-viewer";
+import OrganizationTableViewer from "@/components/administration/organization/organization-table-viewer";
 import * as React from "react";
 import {Organization} from "better-auth/plugins";
 
