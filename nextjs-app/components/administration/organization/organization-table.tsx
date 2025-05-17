@@ -25,13 +25,11 @@ import { z } from "zod"
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
-  DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { Input } from "@/components/ui/input"
 import {
   Table,
   TableBody,
@@ -50,6 +48,7 @@ import {
 import {Checkbox} from "@/components/ui/checkbox";
 import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar";
 import {Organization} from "better-auth/plugins";
+import {authClient} from "@/lib/auth-client";
 
 // Define the organization schema
 export const organizationSchema = z.object({
@@ -68,84 +67,13 @@ function toKebabCase(str: string): string {
     .replace(/[^a-z0-9-]/g, '');
 }
 
-
-// Define the columns for the organization table
-export const columns: ColumnDef<Organization>[] = [
-  {
-    accessorKey: "logo",
-    header: "Logo",
-    cell: ({ row }) => {
-      const logo = row.getValue("logo") as string | undefined
-      const name = row.getValue("name") as string
-      const fallback = name.charAt(0).toUpperCase()
-      return (
-          <Avatar>
-            {logo && <AvatarImage src={logo} alt="Logo" />}
-            <AvatarFallback>{fallback}</AvatarFallback>
-          </Avatar>
-      );
-    },
-  },
-  {
-    accessorKey: "name",
-    header: "Name",
-    cell: ({ row }) => <div className="font-medium">{row.getValue("name")}</div>,
-  },
-  {
-    accessorKey: "slug",
-    header: "Slug",
-    cell: ({ row }) => <div>{row.getValue("slug")}</div>,
-  },
-  {
-    accessorKey: "createdAt",
-    header: "Created At",
-    cell: ({ row }) => {
-      const date = row.getValue("createdAt") as Date
-      return <div>{date.toLocaleDateString()}</div>
-    },
-  },
-  {
-    id: "actions",
-    cell: ({ row }) => {
-      const organization = row.original;
-      return (
-          <div className="w-full flex justify-end">
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="h-8 w-8 p-0">
-                  <span className="sr-only">Open menu</span>
-                  <EllipsisVertical className="h-4 w-4" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuItem
-                    onClick={() => navigator.clipboard.writeText(organization.id)}
-                >
-                  Copy ID
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                    onClick={() =>
-                        (window.location.href = `/admin/organization/${organization.slug}`)
-                    }
-                >
-                  View Details
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>Delete</DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
-      );
-    },
-  },
-]
-
 interface OrganizationTableProps {
   data: Organization[]
   columnFilters: ColumnFiltersState
   setColumnFilters: React.Dispatch<React.SetStateAction<ColumnFiltersState>>
   columnVisibility: VisibilityState
-  setColumnVisibility: React.Dispatch<React.SetStateAction<VisibilityState>>
+  setColumnVisibility: React.Dispatch<React.SetStateAction<VisibilityState>>,
+  onOrganizationDeleted?: (deletedOrganization: Organization) => void
 }
 
 export function OrganizationTable({ 
@@ -153,7 +81,8 @@ export function OrganizationTable({
   columnFilters, 
   setColumnFilters, 
   columnVisibility, 
-  setColumnVisibility 
+  setColumnVisibility,
+  onOrganizationDeleted
 }: OrganizationTableProps) {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [rowSelection, setRowSelection] = React.useState({})
@@ -188,7 +117,85 @@ export function OrganizationTable({
         enableSorting: false,
         enableHiding: false,
       },
-      ...columns,
+
+      {
+        accessorKey: "logo",
+        header: "Logo",
+        cell: ({ row }) => {
+          const logo = row.getValue("logo") as string | undefined
+          const name = row.getValue("name") as string
+          const fallback = name.charAt(0).toUpperCase()
+          return (
+              <Avatar>
+                {logo && <AvatarImage src={logo} alt="Logo" />}
+                <AvatarFallback>{fallback}</AvatarFallback>
+              </Avatar>
+          );
+        },
+      },
+      {
+        accessorKey: "name",
+        header: "Name",
+        cell: ({ row }) => <div className="font-medium">{row.getValue("name")}</div>,
+      },
+      {
+        accessorKey: "slug",
+        header: "Slug",
+        cell: ({ row }) => <div>{row.getValue("slug")}</div>,
+      },
+      {
+        accessorKey: "createdAt",
+        header: "Created At",
+        cell: ({ row }) => {
+          const date = row.getValue("createdAt") as Date
+          return <div>{date.toLocaleDateString()}</div>
+        },
+      },
+      {
+        id: "actions",
+        cell: ({ row }) => {
+          const organization = row.original;
+          return (
+              <div className="w-full flex justify-end">
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" className="h-8 w-8 p-0">
+                      <span className="sr-only">Open menu</span>
+                      <EllipsisVertical className="h-4 w-4" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end">
+                    <DropdownMenuItem
+                        onClick={() => navigator.clipboard.writeText(organization.id)}
+                    >
+                      Copy ID
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                        onClick={() =>
+                            (window.location.href = `/admin/organization/${organization.slug}`)
+                        }
+                    >
+                      View Details
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem
+                        onClick={async () => {
+                          await authClient.organization.delete({
+                            organizationId: organization.id,
+                          });
+                          if (onOrganizationDeleted) {
+                            onOrganizationDeleted(organization);
+                          }
+                        }}
+                    >
+                      Delete
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
+          );
+        },
+      },
     ],
     enableRowSelection: true,
     onSortingChange: setSorting,
@@ -251,7 +258,7 @@ export function OrganizationTable({
             ) : (
               <TableRow>
                 <TableCell
-                  colSpan={columns.length}
+                  colSpan={table.getAllColumns().length}
                   className="h-24 text-center"
                 >
                   No organizations found.

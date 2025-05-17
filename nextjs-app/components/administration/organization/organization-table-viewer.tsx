@@ -99,6 +99,11 @@ export default function OrganizationTableViewer({ organizations }: OrganizationT
                 setColumnFilters={setColumnFilters}
                 columnVisibility={columnVisibility}
                 setColumnVisibility={setColumnVisibility}
+                onOrganizationDeleted={(deletedOrganization) => {
+                    setOrganizationsState(prevOrganizations => 
+                        prevOrganizations.filter(org => org.id !== deletedOrganization.id)
+                    );
+                }}
             />
         </>
     )
