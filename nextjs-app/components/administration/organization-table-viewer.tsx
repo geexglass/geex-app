@@ -22,7 +22,13 @@ interface OrganizationTableViewerProps {
 
 export default function OrganizationTableViewer({ organizations }: OrganizationTableViewerProps) {
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
-    const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
+    const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({
+        logo: true,
+        name: true,
+        slug: true,
+        createdAt: true,
+        actions: true
+    })
     const [organizationsState, setOrganizationsState] = useState<Organization[]>(organizations)
 
     // Update state when props change
@@ -55,7 +61,7 @@ export default function OrganizationTableViewer({ organizations }: OrganizationT
                         <DropdownMenuTrigger asChild>
                             <Button
                                 variant="outline"
-                                className="h-10 w-10 p-0 inline-flex items-center justify-center"
+                                className="w-9 h-9 inline-flex items-center justify-center"
                             >
                                 <TableProperties/>
                             </Button>
