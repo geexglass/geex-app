@@ -15,6 +15,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import {authClient} from "@/lib/auth-client";
+import {Organization} from "better-auth/plugins";
 
 // Function to convert a string to kebab case
 function toKebabCase(str: string): string {
@@ -24,7 +25,11 @@ function toKebabCase(str: string): string {
     .replace(/[^a-z0-9-]/g, '');
 }
 
-export function CreateOrganizationDialog() {
+interface CreateOrganizationDialogProps {
+  onOrganizationCreated?: (organization: Organization) => void;
+}
+
+export function CreateOrganizationDialog({ onOrganizationCreated }: CreateOrganizationDialogProps) {
   const [name, setName] = React.useState("");
   const [handle, setHandle] = React.useState("");
   const [open, setOpen] = React.useState(false);
@@ -42,17 +47,25 @@ export function CreateOrganizationDialog() {
   };
 
   // Handle form submission
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
-    authClient.organization.create({
-        name,
-        slug: handle,
-    })
+    try {
+      const { data : newOrganization  } = await authClient.organization.create({
+          name,
+          slug: handle,
+      });
 
-    setName("");
-    setHandle("");
-    setOpen(false);
+      if (newOrganization && onOrganizationCreated) {
+        onOrganizationCreated(newOrganization);
+      }
+
+      setName("");
+      setHandle("");
+      setOpen(false);
+    } catch (error) {
+      console.error("Error creating organization:", error);
+    }
   };
 
   return (

@@ -14,6 +14,7 @@ import {CreateOrganizationDialog} from "@/components/administration/create-organ
 import {OrganizationTable} from "@/components/administration/organization-table";
 import {Organization} from "better-auth/plugins";
 import {TableProperties} from "lucide-react";
+import { useEffect, useState } from "react";
 
 interface OrganizationTableViewerProps {
     organizations: Organization[]
@@ -22,6 +23,12 @@ interface OrganizationTableViewerProps {
 export default function OrganizationTableViewer({ organizations }: OrganizationTableViewerProps) {
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
     const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
+    const [organizationsState, setOrganizationsState] = useState<Organization[]>(organizations)
+
+    // Update state when props change
+    useEffect(() => {
+        setOrganizationsState(organizations)
+    }, [organizations])
 
     return (
         <>
@@ -73,12 +80,16 @@ export default function OrganizationTableViewer({ organizations }: OrganizationT
                             })}
                         </DropdownMenuContent>
                     </DropdownMenu>
-                    <CreateOrganizationDialog />
+                    <CreateOrganizationDialog 
+                        onOrganizationCreated={(newOrganization) => {
+                            setOrganizationsState(prevOrganizations => [...prevOrganizations, newOrganization]);
+                        }}
+                    />
                 </div>
             </div>
 
             <OrganizationTable
-                data={organizations}
+                data={organizationsState}
                 columnFilters={columnFilters}
                 setColumnFilters={setColumnFilters}
                 columnVisibility={columnVisibility}
