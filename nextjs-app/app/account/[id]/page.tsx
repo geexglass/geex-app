@@ -1,22 +1,22 @@
 'use client';
 
 import { authClient } from "@/lib/auth-client";
-import React from "react";
 import {useParams} from "next/navigation";
 
 export default function UserPage({ params }: { params: { id: string } }) {
     const { data: session } = authClient.useSession();
-    const { id } = useParams()
+    const { id } = useParams();
 
-    if (session?.user?.id == id) {
+    if (!session?.user || session.user?.id !== id) {
+      // todo: handle for public users
       return (
           <div className="flex flex-col gap-4 p-6 md:p-10">
             <div className="flex flex-1 items-center justify-center">
-              This is you!
+              User not found, or not public
             </div>
           </div>
           )
-          }
+    }
 
           return (
           <div className="flex flex-col gap-4 p-6 md:p-10">

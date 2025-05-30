@@ -39,6 +39,7 @@ export function RegisterForm({
     });
 
     if (error) {
+      console.log(error);
       setError(error.message ? error.message : "Something went wrong");
     }
 

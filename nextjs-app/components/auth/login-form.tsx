@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label"
 import Link from "next/link";
 import { useState } from "react";
 import { authClient } from "@/lib/auth-client";
+import {redirect} from "next/navigation";
 export function LoginForm({
                               className,
                               ...props
@@ -23,7 +24,13 @@ export function LoginForm({
 
         const { error } = await authClient.signIn.email({
             email,
-            password
+            password,
+            fetchOptions: {
+              onSuccess(ctx) {
+                // redirect to the page the user was trying to access, or to the home page
+                redirect("/")
+        }
+            }
         });
 
         if (error) {
