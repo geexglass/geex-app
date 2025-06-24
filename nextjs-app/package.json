@@ -24,7 +24,7 @@
     "pg": "^8.16.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "sanity": "^3.88.3",
+    "sanity": "^3.94.2",
     "sonner": "^1.7.0",
     "styled-components": "^6.1.18"
   },
