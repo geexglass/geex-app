@@ -4,11 +4,12 @@ import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs";
 import OrganizationTableViewer from "@/components/administration/organization/organization-table-viewer";
 import * as React from "react";
 import {Organization} from "better-auth/plugins";
+import {Button} from "@/components/ui/button";
+import {sendTestEmail} from "@/app/actions/sendTestEmail";
 
 interface AdminContentProps {
     organizations: Organization[]
 }
-
 export default function AdminContent({ organizations }: AdminContentProps) {
 
     return (
@@ -21,6 +22,8 @@ export default function AdminContent({ organizations }: AdminContentProps) {
                     <TabsTrigger value="users">Users</TabsTrigger>
                     <TabsTrigger value="sessions">Sessions</TabsTrigger>
                 </TabsList>
+
+                <Button onClick={() => sendTestEmail()}>Send Email</Button>
 
                 <TabsContent value="organizations">
                     <OrganizationTableViewer organizations={organizations} />
