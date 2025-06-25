@@ -2,6 +2,7 @@ import { betterAuth } from "better-auth";
 import { Pool } from "pg";
 import {admin, haveIBeenPwned, organization} from "better-auth/plugins";
 import {nextCookies} from "better-auth/next-js";
+import { sendEmail } from "./email";
 
 const POSTGRES_USER = process.env.POSTGRES_USER;
 const POSTGRES_PASSWORD = process.env.POSTGRES_PASSWORD;
@@ -16,7 +17,18 @@ const postgresUrl = `postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES
 
 export const auth = betterAuth({
     emailAndPassword: {
-        enabled: true
+        enabled: true,
+        forgotPassword: {
+            enabled: true,
+            sendResetEmail: async (email: string, resetToken: string) => {
+                const resetUrl = `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/reset-password?token=${resetToken}`;
+                await sendEmail(
+                    email,
+                    "Reset Your Password - GEEX",
+                    `Click the link below to reset your password:\n\n${resetUrl}\n\nThis link will expire in 1 hour.\n\nIf you didn't request this, please ignore this email.`
+                );
+            }
+        }
     },
     database: new Pool({
         connectionString: postgresUrl

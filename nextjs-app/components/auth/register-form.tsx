@@ -7,11 +7,14 @@ import { Label } from "@/components/ui/label"
 import Link from "next/link"
 import { useState } from "react"
 import { authClient } from "@/lib/auth-client"
+import { useSearchParams } from "next/navigation"
 
 export function RegisterForm({
   className,
   ...props
 }: React.ComponentPropsWithoutRef<"form">) {
+  const searchParams = useSearchParams();
+  const inviteToken = searchParams.get('invite');
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -48,9 +51,14 @@ export function RegisterForm({
   return (
     <form className={cn("flex flex-col gap-6", className)} {...props} onSubmit={handleSubmit}>
       <div className="flex flex-col items-center gap-2 text-center">
-        <h1 className="text-2xl font-bold">Create an account</h1>
+        <h1 className="text-2xl font-bold">
+          {inviteToken ? "Accept Invitation" : "Create an account"}
+        </h1>
         <p className="text-balance text-sm text-muted-foreground">
-          Enter your details below to create your account
+          {inviteToken 
+            ? "Complete your account setup to accept the invitation"
+            : "Enter your details below to create your account"
+          }
         </p>
       </div>
       {error && (

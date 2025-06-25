@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
+import { authClient } from "@/lib/auth-client";
+import { toast } from "sonner";
 
 export function ForgotPasswordForm({
   className,
@@ -11,13 +13,24 @@ export function ForgotPasswordForm({
 }: React.ComponentPropsWithoutRef<"form">) {
   const [email, setEmail] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsLoading(true);
 
-    // TODO: Add actual email validation and password reset logic
-    // For now, we'll just simulate a successful submission
-    setIsSubmitted(true);
+    try {
+      await authClient.forgotPassword({
+        email,
+        redirectTo: "/reset-password",
+      });
+      setIsSubmitted(true);
+      toast.success("Password reset link sent to your email");
+    } catch (error: any) {
+      toast.error(error.message || "Failed to send password reset email");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -51,8 +64,8 @@ export function ForgotPasswordForm({
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
-          <Button type="submit" className="w-full">
-            Send Reset Link
+          <Button type="submit" className="w-full" disabled={isLoading}>
+            {isLoading ? "Sending..." : "Send Reset Link"}
           </Button>
         </div>
       ) : (

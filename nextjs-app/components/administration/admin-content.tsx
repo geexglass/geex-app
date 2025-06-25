@@ -2,6 +2,7 @@
 
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs";
 import OrganizationTableViewer from "@/components/administration/organization/organization-table-viewer";
+import UserInvitationDialog from "@/components/administration/user-invitation-dialog";
 import * as React from "react";
 import {Organization} from "better-auth/plugins";
 import {Button} from "@/components/ui/button";
@@ -30,7 +31,10 @@ export default function AdminContent({ organizations }: AdminContentProps) {
                 </TabsContent>
 
                 <TabsContent value="users" className="space-y-4">
-                    <h2 className="text-xl font-semibold">Users</h2>
+                    <div className="flex items-center justify-between">
+                        <h2 className="text-xl font-semibold">Users</h2>
+                        <UserInvitationDialog />
+                    </div>
                     <p className="text-muted-foreground">User management will be implemented here.</p>
                 </TabsContent>
 
