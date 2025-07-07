@@ -43,7 +43,7 @@ export function ResetPasswordForm({
         try {
             await authClient.resetPassword({
                 token,
-                password: newPassword,
+                newPassword: newPassword,
             });
             
             setIsSubmitted(true);
