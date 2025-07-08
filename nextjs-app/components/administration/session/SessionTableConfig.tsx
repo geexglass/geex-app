@@ -1,10 +1,11 @@
 "use client"
 
 import { Session } from "@/lib/admin"
-import { LogOut, Shield, Monitor } from "lucide-react"
+import { LogOut, Shield, Monitor, Smartphone, Tablet } from "lucide-react"
 import { DataTableConfig } from "@/components/shared/DataTable"
 import { Badge } from "@/components/ui/badge"
 import { format, formatDistanceToNow } from "date-fns"
+import { UAParser } from "ua-parser-js"
 
 interface SessionTableConfigProps {
   onRevokeSession: (sessionId: string) => void
@@ -38,34 +39,42 @@ export function createSessionTableConfig(
         id: "device",
         header: "Device",
         cell: (session) => {
-          const getBrowserInfo = (ua: string) => {
-            if (!ua) return { browser: "Unknown", device: "Unknown" }
-            
-            let browser = "Unknown"
-            let device = "Desktop"
-            
-            if (ua.includes("Chrome")) browser = "Chrome"
-            else if (ua.includes("Firefox")) browser = "Firefox"
-            else if (ua.includes("Safari")) browser = "Safari"
-            else if (ua.includes("Edge")) browser = "Edge"
-            
-            if (ua.includes("Mobile") || ua.includes("Android") || ua.includes("iPhone")) {
-              device = "Mobile"
-            } else if (ua.includes("Tablet") || ua.includes("iPad")) {
-              device = "Tablet"
+          const parser = new UAParser(session.userAgent || "")
+          const result = parser.getResult()
+          
+          const browserName = result.browser.name || "Unknown Browser"
+          const deviceType = result.device.type || "desktop"
+          
+          // Get appropriate icon based on device type
+          const getDeviceIcon = () => {
+            switch (deviceType) {
+              case "mobile":
+                return <Smartphone className="h-4 w-4 text-muted-foreground" />
+              case "tablet":
+                return <Tablet className="h-4 w-4 text-muted-foreground" />
+              default:
+                return <Monitor className="h-4 w-4 text-muted-foreground" />
             }
-            
-            return { browser, device }
           }
           
-          const { browser, device } = getBrowserInfo(session.userAgent || "")
+          // Format device type for display
+          const getDeviceLabel = () => {
+            switch (deviceType) {
+              case "mobile":
+                return "Mobile"
+              case "tablet":
+                return "Tablet"
+              default:
+                return "Desktop"
+            }
+          }
           
           return (
             <div className="flex items-center gap-2">
-              <Monitor className="h-4 w-4 text-muted-foreground" />
+              {getDeviceIcon()}
               <div>
-                <div className="text-sm font-medium">{browser}</div>
-                <div className="text-xs text-muted-foreground">{device}</div>
+                <div className="text-sm font-medium">{browserName}</div>
+                <div className="text-xs text-muted-foreground">{getDeviceLabel()}</div>
               </div>
             </div>
           )

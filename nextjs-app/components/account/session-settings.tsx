@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import { Monitor, Smartphone, Tablet, LogOut, RefreshCw } from "lucide-react";
 import { format, formatDistanceToNow } from "date-fns";
 import { Badge } from "@/components/ui/badge";
+import { UAParser } from "ua-parser-js";
 
 interface Session {
     id: string;
@@ -93,36 +94,42 @@ export function SessionSettings({ userId }: SessionSettingsProps) {
         }
     };
 
-    const getDeviceIcon = (userAgent: string) => {
-        if (!userAgent) return <Monitor className="h-4 w-4" />;
+    const parseUserAgent = (userAgent?: string) => {
+        const parser = new UAParser(userAgent || "");
+        const result = parser.getResult();
         
-        if (userAgent.includes("Mobile") || userAgent.includes("Android") || userAgent.includes("iPhone")) {
-            return <Smartphone className="h-4 w-4" />;
-        } else if (userAgent.includes("Tablet") || userAgent.includes("iPad")) {
-            return <Tablet className="h-4 w-4" />;
-        }
-        return <Monitor className="h-4 w-4" />;
-    };
-
-    const getBrowserInfo = (userAgent: string) => {
-        if (!userAgent) return "Unknown Browser";
+        const browserName = result.browser.name || "Unknown Browser";
+        const deviceType = result.device.type || "desktop";
         
-        if (userAgent.includes("Chrome")) return "Chrome";
-        if (userAgent.includes("Firefox")) return "Firefox";
-        if (userAgent.includes("Safari")) return "Safari";
-        if (userAgent.includes("Edge")) return "Edge";
-        return "Unknown Browser";
-    };
-
-    const getDeviceType = (userAgent: string) => {
-        if (!userAgent) return "Unknown Device";
+        // Get appropriate icon based on device type
+        const getDeviceIcon = () => {
+            switch (deviceType) {
+                case "mobile":
+                    return <Smartphone className="h-4 w-4" />;
+                case "tablet":
+                    return <Tablet className="h-4 w-4" />;
+                default:
+                    return <Monitor className="h-4 w-4" />;
+            }
+        };
         
-        if (userAgent.includes("Mobile") || userAgent.includes("Android") || userAgent.includes("iPhone")) {
-            return "Mobile Device";
-        } else if (userAgent.includes("Tablet") || userAgent.includes("iPad")) {
-            return "Tablet";
-        }
-        return "Desktop";
+        // Format device type for display
+        const getDeviceLabel = () => {
+            switch (deviceType) {
+                case "mobile":
+                    return "Mobile Device";
+                case "tablet":
+                    return "Tablet";
+                default:
+                    return "Desktop";
+            }
+        };
+        
+        return {
+            browserName,
+            deviceIcon: getDeviceIcon(),
+            deviceLabel: getDeviceLabel()
+        };
     };
 
     if (isLoading) {
@@ -167,25 +174,28 @@ export function SessionSettings({ userId }: SessionSettingsProps) {
 
             {/* Sessions List */}
             <div className="space-y-3">
-                {sessions.map((session) => (
-                    <div key={session.id} className="p-4 border rounded-lg">
-                        <div className="flex items-start justify-between">
-                            <div className="flex items-start gap-3">
-                                {getDeviceIcon(session.userAgent || "")}
-                                <div className="space-y-1">
-                                    <div className="flex items-center gap-2">
-                                        <span className="font-medium">
-                                            {getBrowserInfo(session.userAgent || "")}
-                                        </span>
-                                        {session.isCurrent && (
-                                            <Badge variant="secondary" className="text-xs">
-                                                Current Session
-                                            </Badge>
-                                        )}
-                                    </div>
-                                    <p className="text-sm text-muted-foreground">
-                                        {getDeviceType(session.userAgent || "")}
-                                    </p>
+                {sessions.map((session) => {
+                    const { browserName, deviceIcon, deviceLabel } = parseUserAgent(session.userAgent);
+                    
+                    return (
+                        <div key={session.id} className="p-4 border rounded-lg">
+                            <div className="flex items-start justify-between">
+                                <div className="flex items-start gap-3">
+                                    {deviceIcon}
+                                    <div className="space-y-1">
+                                        <div className="flex items-center gap-2">
+                                            <span className="font-medium">
+                                                {browserName}
+                                            </span>
+                                            {session.isCurrent && (
+                                                <Badge variant="secondary" className="text-xs">
+                                                    Current Session
+                                                </Badge>
+                                            )}
+                                        </div>
+                                        <p className="text-sm text-muted-foreground">
+                                            {deviceLabel}
+                                        </p>
                                     <div className="flex items-center gap-4 text-xs text-muted-foreground">
                                         <span>IP: {session.ipAddress || "Hidden"}</span>
                                         <span>
@@ -211,7 +221,8 @@ export function SessionSettings({ userId }: SessionSettingsProps) {
                             )}
                         </div>
                     </div>
-                ))}
+                    );
+                })}
             </div>
 
             {/* Security Info */}
