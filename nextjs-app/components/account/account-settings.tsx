@@ -6,6 +6,7 @@ import { ProfileSettings } from "./profile-settings";
 import { PasswordSettings } from "./password-settings";
 import { EmailSettings } from "./email-settings";
 import { SessionSettings } from "./session-settings";
+import { OrganizationSettings } from "./organization-settings";
 import { DangerZone } from "./danger-zone";
 
 interface AccountSettingsProps {
@@ -64,6 +65,19 @@ export function AccountSettings({ user }: AccountSettingsProps) {
                 </CardHeader>
                 <CardContent>
                     <SessionSettings userId={user.id} />
+                </CardContent>
+            </Card>
+
+            {/* Organization Settings Section */}
+            <Card>
+                <CardHeader>
+                    <CardTitle>Organization Settings</CardTitle>
+                    <CardDescription>
+                        Manage your organization memberships and create new organizations
+                    </CardDescription>
+                </CardHeader>
+                <CardContent>
+                    <OrganizationSettings user={user} />
                 </CardContent>
             </Card>
 
