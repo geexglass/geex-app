@@ -54,7 +54,11 @@ export const auth = betterAuth({
     plugins: [
         nextCookies(),
         admin(),
-        organization({}),
+        organization({
+            allowUserToCreateOrganization: true,
+            organizationLimit: 3,
+            creatorRole: "owner",
+        }),
         haveIBeenPwned({
             customPasswordCompromisedMessage: "Please choose a more secure password."
         }),
