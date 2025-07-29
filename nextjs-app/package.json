@@ -21,7 +21,7 @@
     "date-fns": "^3.6.0",
     "next": "^15.3.0",
     "next-sanity": "^9.11.0",
-    "pg": "^8.16.0",
+    "pg": "^8.16.3",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "sanity": "^3.88.3",
@@ -30,7 +30,7 @@
   },
   "devDependencies": {
     "@types/node": "^22.15.17",
-    "@types/pg": "^8.15.1",
+    "@types/pg": "^8.15.5",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.5",
     "eslint": "^8.57.0",
