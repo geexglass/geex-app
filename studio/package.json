@@ -18,7 +18,7 @@
   "dependencies": {
     "@sanity/assist": "^4.2.0",
     "@sanity/icons": "^3.5.0",
-    "@sanity/vision": "^3.88.3",
+    "@sanity/vision": "^4.4.0",
     "date-fns": "^3.6.0",
     "pluralize-esm": "^9.0.5",
     "react": "^19.1.0",
