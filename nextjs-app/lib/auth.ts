@@ -1,5 +1,7 @@
 import { betterAuth } from "better-auth";
 import { Pool } from "pg";
+import {admin, haveIBeenPwned, organization} from "better-auth/plugins";
+import {nextCookies} from "better-auth/next-js";
 
 const POSTGRES_USER = process.env.POSTGRES_USER;
 const POSTGRES_PASSWORD = process.env.POSTGRES_PASSWORD;
@@ -19,4 +21,18 @@ export const auth = betterAuth({
     database: new Pool({
         connectionString: postgresUrl
     }),
+    session: {
+        cookieCache: {
+            enabled: true,
+            maxAge: 60 * 60, // 1 hour
+        },
+    },
+    plugins: [
+        nextCookies(),
+        admin(),
+        organization({}),
+        haveIBeenPwned({
+            customPasswordCompromisedMessage: "Please choose a more secure password."
+        })
+    ]
 })
