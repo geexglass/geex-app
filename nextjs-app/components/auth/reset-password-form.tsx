@@ -4,6 +4,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
+import { authClient } from "@/lib/auth-client";
+import { toast } from "sonner";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export function ResetPasswordForm({
                                       className,
@@ -12,13 +15,49 @@ export function ResetPasswordForm({
     const [newPassword, setNewPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [isSubmitted, setIsSubmitted] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const router = useRouter();
+    const searchParams = useSearchParams();
+    const token = searchParams.get('token');
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        
+        if (!token) {
+            toast.error("Invalid or missing reset token");
+            return;
+        }
 
-        // TODO: Add actual password validation and reset logic
-        // e.g. verify passwords match, enforce strength, call API, handle errors
-        setIsSubmitted(true);
+        if (newPassword !== confirmPassword) {
+            toast.error("Passwords do not match");
+            return;
+        }
+
+        if (newPassword.length < 6) {
+            toast.error("Password must be at least 6 characters long");
+            return;
+        }
+
+        setIsLoading(true);
+
+        try {
+            await authClient.resetPassword({
+                token,
+                newPassword: newPassword,
+            });
+            
+            setIsSubmitted(true);
+            toast.success("Password reset successfully!");
+            
+            // Redirect to sign in after 2 seconds
+            setTimeout(() => {
+                router.push('/sign-in');
+            }, 2000);
+        } catch (error: any) {
+            toast.error(error.message || "Failed to reset password");
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     return (
@@ -62,8 +101,8 @@ export function ResetPasswordForm({
                             onChange={(e) => setConfirmPassword(e.target.value)}
                         />
                     </div>
-                    <Button type="submit" className="w-full">
-                        Reset Password
+                    <Button type="submit" className="w-full" disabled={isLoading}>
+                        {isLoading ? "Resetting..." : "Reset Password"}
                     </Button>
                 </div>
             ) : (

@@ -2,13 +2,15 @@
 
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs";
 import OrganizationTableViewer from "@/components/administration/organization/organization-table-viewer";
+import UserInvitationDialog from "@/components/administration/user-invitation-dialog";
+import UserTableViewer from "@/components/administration/user/user-table-viewer";
+import SessionTableViewer from "@/components/administration/session/session-table-viewer";
 import * as React from "react";
 import {Organization} from "better-auth/plugins";
 
 interface AdminContentProps {
     organizations: Organization[]
 }
-
 export default function AdminContent({ organizations }: AdminContentProps) {
 
     return (
@@ -22,18 +24,21 @@ export default function AdminContent({ organizations }: AdminContentProps) {
                     <TabsTrigger value="sessions">Sessions</TabsTrigger>
                 </TabsList>
 
+
                 <TabsContent value="organizations">
                     <OrganizationTableViewer organizations={organizations} />
                 </TabsContent>
 
                 <TabsContent value="users" className="space-y-4">
-                    <h2 className="text-xl font-semibold">Users</h2>
-                    <p className="text-muted-foreground">User management will be implemented here.</p>
+                    <div className="flex items-center justify-between">
+                        <h2 className="text-xl font-semibold">Users</h2>
+                        <UserInvitationDialog />
+                    </div>
+                    <UserTableViewer />
                 </TabsContent>
 
                 <TabsContent value="sessions" className="space-y-4">
-                    <h2 className="text-xl font-semibold">Sessions</h2>
-                    <p className="text-muted-foreground">Session management will be implemented here.</p>
+                    <SessionTableViewer />
                 </TabsContent>
             </Tabs>
         </div>

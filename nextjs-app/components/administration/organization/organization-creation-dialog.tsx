@@ -16,14 +16,8 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import {authClient} from "@/lib/auth-client";
 import {Organization} from "better-auth/plugins";
-
-// Function to convert a string to kebab case
-function toKebabCase(str: string): string {
-  return str
-    .toLowerCase()
-    .replace(/\s+/g, '-')
-    .replace(/[^a-z0-9-]/g, '');
-}
+import { toast } from "sonner";
+import { toOrganizationSlug } from "@/lib/organization-utils";
 
 interface CreateOrganizationDialogProps {
   onOrganizationCreated?: (organization: Organization) => void;
@@ -38,7 +32,7 @@ export function OrganizationCreationDialog({ onOrganizationCreated }: CreateOrga
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newName = event.target.value;
     setName(newName);
-    setHandle(toKebabCase(newName));
+    setHandle(toOrganizationSlug(newName));
   };
 
   // Handle handle change
@@ -51,19 +45,26 @@ export function OrganizationCreationDialog({ onOrganizationCreated }: CreateOrga
     event.preventDefault();
 
     try {
-      const { data : newOrganization  } = await authClient.organization.create({
+      const { data: newOrganization, error } = await authClient.organization.create({
           name,
           slug: handle,
       });
+
+      if (error) {
+        toast.error(error.message || "Failed to create organization");
+        return;
+      }
 
       if (newOrganization && onOrganizationCreated) {
         onOrganizationCreated(newOrganization);
       }
 
+      toast.success("Organization created successfully");
       setName("");
       setHandle("");
       setOpen(false);
     } catch (error) {
+      toast.error("Something went wrong. Please try again.");
       console.error("Error creating organization:", error);
     }
   };
