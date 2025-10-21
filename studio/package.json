@@ -1,5 +1,5 @@
 {
-  "name": "starter-template",
+  "name": "geex-studio",
   "private": true,
   "version": "1.0.0",
   "main": "package.json",
@@ -18,13 +18,13 @@
   "dependencies": {
     "@sanity/assist": "^4.2.0",
     "@sanity/icons": "^3.5.0",
-    "@sanity/vision": "^3.88.3",
+    "@sanity/vision": "^4.10.3",
     "date-fns": "^3.6.0",
     "pluralize-esm": "^9.0.5",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "rxjs": "^7.8.1",
-    "sanity": "^3.88.3",
+    "sanity": "^4.10.3",
     "sanity-plugin-asset-source-unsplash": "^3.0.1",
     "styled-components": "^6.1.18"
   },

@@ -46,10 +46,7 @@ export const post = defineType({
       title: 'Cover Image',
       type: 'image',
       options: {
-        hotspot: true,
-        aiAssist: {
-          imageDescriptionField: 'alt',
-        },
+        hotspot: true
       },
       fields: [
         {
@@ -81,6 +78,13 @@ export const post = defineType({
       title: 'Author',
       type: 'reference',
       to: [{type: 'person'}],
+    }),
+    defineField({
+      name: 'contributors',
+      title: 'Contributors',
+      type: 'array',
+      of: [{type: 'reference', to: [{type: 'person'}]}],
+      description: 'Additional people who contributed to this post',
     }),
   ],
   // List preview configuration. https://www.sanity.io/docs/previews-list-views
