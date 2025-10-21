@@ -60,26 +60,3 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 Button.displayName = "Button"
 
 export { Button, buttonVariants }
-
-// export const GeexButton = ({
-//   className = '',
-//   halfWidth = false,
-//   primary = false,
-//   children,
-// }: {
-//   className?: string
-//   halfWidth?: boolean
-//   primary?: boolean
-//   children: React.ReactNode
-// }) => (
-//   <button
-//     className={twMerge(
-//       `${halfWidth ? 'w-[50%]' : 'w-auto'} ${
-//         primary ? 'bg-geexRed' : 'bg-geexGrayDark'
-//       } text-geexGrayLight p-3 rounded-lg font-bold max-h-[80px]`,
-//       className,
-//     )}
-//   >
-//     {children}
-//   </button>
-// )
