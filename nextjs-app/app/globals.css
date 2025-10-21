@@ -84,3 +84,88 @@
     @apply bg-background text-foreground;
   }
 }
+
+a {
+  color: #0078b3;
+}
+
+a:hover {
+  color: #0056b3;
+}
+
+/* Large view styles */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Proxima Soft', sans-serif;
+  font-weight: bold;
+}
+
+h1 {
+  font-size: 72px;
+}
+
+h2 {
+  font-size: 53px;
+}
+
+h3 {
+  font-size: 40px;
+}
+
+h4 {
+  font-size: 30px;
+}
+
+h5 {
+  font-size: 25px;
+}
+
+/* Small view styles */
+
+@media (max-width: 1600px) {
+  h1 {
+    font-size: 52px;
+  }
+
+  h2 {
+    font-size: 40px;
+  }
+
+  h3 {
+    font-size: 30px;
+  }
+
+  h4 {
+    font-size: 25px;
+  }
+
+  h5 {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 640px) {
+  h1 {
+    font-size: 72px;
+  }
+
+  h2 {
+    font-size: 52px;
+  }
+
+  h3 {
+    font-size: 40px;
+  }
+
+  h4 {
+    font-size: 30px;
+  }
+
+  h5 {
+    font-size: 25px;
+  }
+}
