@@ -10,13 +10,13 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-primary text-primary-foreground shadow-sm hover:bg-primary/90",
+          "bg-geex-red-500 text-primary-foreground shadow-sm hover:bg-geex-red-700",
         destructive:
           "bg-destructive text-destructive-foreground shadow-xs hover:bg-destructive/90",
         outline:
           "border border-input bg-background shadow-xs hover:bg-accent hover:text-accent-foreground",
         secondary:
-          "bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80",
+          "bg-geex-gray-600 text-geex-gray-100 shadow-xs hover:bg-geex-gray-700",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
       },
@@ -25,6 +25,11 @@ const buttonVariants = cva(
         sm: "h-8 rounded-md px-3 text-xs",
         lg: "h-10 rounded-md px-8",
         icon: "h-9 w-9",
+      },
+      width: {
+        default: "w-auto",
+        half: "w-[50%]",
+        full: "w-full",
       },
     },
     defaultVariants: {
@@ -55,3 +60,26 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 Button.displayName = "Button"
 
 export { Button, buttonVariants }
+
+// export const GeexButton = ({
+//   className = '',
+//   halfWidth = false,
+//   primary = false,
+//   children,
+// }: {
+//   className?: string
+//   halfWidth?: boolean
+//   primary?: boolean
+//   children: React.ReactNode
+// }) => (
+//   <button
+//     className={twMerge(
+//       `${halfWidth ? 'w-[50%]' : 'w-auto'} ${
+//         primary ? 'bg-geexRed' : 'bg-geexGrayDark'
+//       } text-geexGrayLight p-3 rounded-lg font-bold max-h-[80px]`,
+//       className,
+//     )}
+//   >
+//     {children}
+//   </button>
+// )

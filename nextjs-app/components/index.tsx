@@ -3,28 +3,7 @@ import { ClassNameValue, twMerge } from 'tailwind-merge'
 import React from 'react'
 import { Chip, ChipSmall } from './ui/chip'
 
-export const GeexButton = ({
-  className = '',
-  halfWidth = false,
-  primary = false,
-  children,
-}: {
-  className?: string
-  halfWidth?: boolean
-  primary?: boolean
-  children: React.ReactNode
-}) => (
-  <button
-    className={twMerge(
-      `${halfWidth ? 'w-[50%]' : 'w-auto'} ${
-        primary ? 'bg-geexRed' : 'bg-geexGrayDark'
-      } text-geexGrayLight p-3 rounded-lg font-bold max-h-[80px]`,
-      className,
-    )}
-  >
-    {children}
-  </button>
-)
+
 
 interface ObjectNodeProps {
   image?: string

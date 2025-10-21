@@ -6,22 +6,15 @@ import { TwoColumn } from "@/components/ui/columns";
 import { Button } from "@/components/ui/button";
 import { VideoNode } from "@/components/ui/video-node";
 import { Card } from "@/components/ui/card";
+import { WelcomeRow } from "@/app/components/WelcomeRow";
 
 export default async function Page() {
   return (
     <>
         <div className="container py-20 text-center grid grid-cols-1 gap-4">
-          <Row>
-            <h1 className="text-4xl font-bold">Welcome, FirstName</h1>
-            <Row>
-              <Button variant="default" size="lg">
-                Glassy University
-              </Button>
-              <Button variant="default" size="lg">
-                Individual Subscriber
-              </Button>
-            </Row>
-          </Row>
+          <Suspense fallback={<div>Loading...</div>}>
+            <WelcomeRow />
+          </Suspense>
           <VideoNode videoUrl="https://www.youtube.com/watch?v=lPLyPGwavMU" title="My Video" subtitle="My Video Subtitle"/>
           <TwoColumn>
             <Card>
