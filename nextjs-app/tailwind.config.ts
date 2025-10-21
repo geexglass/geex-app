@@ -7,14 +7,49 @@ export default {
   theme: {
   	container: {
   		center: true,
-  		padding: '2rem'
   	},
   	extend: {
   		boxShadow: {
   			layer: '0 35px 60px -15px rgba(0, 0, 0, 0.3)'
   		},
   		colors: {
-  			black: '#0d0e12',
+			geex: {
+				blue: {
+					'500': '#0078B3',
+					'700': '#003C5A',
+					'900': '#032536'
+				},
+				red: {
+					'500': '#EC2024',
+					'700': '#c20024'
+				},
+				'redOrange': '#EF4E2B',
+				'yellow': '#FAAF3B',
+				'orange': '#F47F31',
+				green: {
+					'500': '#00b140',
+					'700': '#01641e'
+				},
+				purple: {
+					'500': '#7c2c9c',
+					'700': '#4a1a6c'
+				},
+				gray: {
+					'50': '#fbfbfc',
+					'100': '#f9f9fa',
+					'200': '#f7f7f8',
+					'300': '#f2f2f2',
+					'400': '#F3F4F4',
+					'500': '#CCCCCC',
+					'600': '#666666',
+					'700': '#333333',
+					'800': '#131313',
+					'900': '#0d0e12'
+				},
+				'white': '#ffffff',
+				'black': '#000000',
+			},
+			black: '#0d0e12',
   			white: '#fff',
   			cyan: {
   				'50': '#e7fefe',
@@ -40,7 +75,7 @@ export default {
   				'700': '#383d51',
   				'800': '#252837',
   				'900': '#1b1d27',
-  				'950': '#13141b'
+  				'950': '#13141b',
   			},
   			red: {
   				'50': '#fff6f5',

@@ -80,7 +80,7 @@ export default async function RootLayout({
           {/* The <SanityLive> component is responsible for making all sanityFetch calls in your application live, so should always be rendered. */}
           <SanityLive onError={handleError} />
           <Header />
-          <main className="">{children}</main>
+          <main className="bg-geex-gray-400 max-w-[1600px] px-4 md:px-16 lg:px-40">{children}</main>
           <Footer />
         </section>
         <SpeedInsights />

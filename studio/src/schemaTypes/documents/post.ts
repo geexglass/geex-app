@@ -82,6 +82,13 @@ export const post = defineType({
       type: 'reference',
       to: [{type: 'person'}],
     }),
+    defineField({
+      name: 'contributors',
+      title: 'Contributors',
+      type: 'array',
+      of: [{type: 'reference', to: [{type: 'person'}]}],
+      description: 'Additional people who contributed to this post',
+    }),
   ],
   // List preview configuration. https://www.sanity.io/docs/previews-list-views
   preview: {
