@@ -46,10 +46,7 @@ export const post = defineType({
       title: 'Cover Image',
       type: 'image',
       options: {
-        hotspot: true,
-        aiAssist: {
-          imageDescriptionField: 'alt',
-        },
+        hotspot: true
       },
       fields: [
         {
