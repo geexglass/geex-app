@@ -58,6 +58,8 @@ jobs:
           file: ./nextjs-app/Dockerfile
           push: false
           build-args: |
+            EMAIL_USER=${{ secrets.EMAIL_USER }}
+            EMAIL_PASS=${{ secrets.EMAIL_PASS }}
             SANITY_PROJECT_ID=${{ secrets.SANITY_PROJECT_ID }}
             SANITY_DATASET=${{ vars.SANITY_DEV_DATASET }}
             SANITY_API_READ_TOKEN=${{ secrets.SANITY_API_READ_TOKEN }}
