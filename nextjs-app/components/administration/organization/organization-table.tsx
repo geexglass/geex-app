@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import { useRouter } from "next/navigation"
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -84,6 +85,7 @@ export function OrganizationTable({
   setColumnVisibility,
   onOrganizationDeleted
 }: OrganizationTableProps) {
+  const router = useRouter()
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [rowSelection, setRowSelection] = React.useState({})
   const [pagination, setPagination] = React.useState({
@@ -171,9 +173,7 @@ export function OrganizationTable({
                       Copy ID
                     </DropdownMenuItem>
                     <DropdownMenuItem
-                        onClick={() =>
-                            (window.location.href = `/admin/organization/${organization.slug}`)
-                        }
+                      onClick={() => router.push(`/admin/organization/${organization.slug}`)}
                     >
                       View Details
                     </DropdownMenuItem>

@@ -8,6 +8,7 @@ const nextConfig = [
 	{
 		rules: {
 			"react-hooks/set-state-in-effect": "off",
+			"react-hooks/incompatible-library": "off",
 		},
 	},
 ];

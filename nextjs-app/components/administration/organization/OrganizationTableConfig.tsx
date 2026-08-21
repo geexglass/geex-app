@@ -8,11 +8,12 @@ import { authClient } from "@/lib/auth-client"
 
 interface OrganizationTableConfigProps {
   onOrganizationDeleted?: (organization: Organization) => void
+  onViewOrganization?: (organization: Organization) => void
 }
 
 export function createOrganizationTableConfig(
   data: Organization[],
-  { onOrganizationDeleted }: OrganizationTableConfigProps = {}
+  { onOrganizationDeleted, onViewOrganization }: OrganizationTableConfigProps = {}
 ): DataTableConfig<Organization> {
   return {
     data,
@@ -74,7 +75,7 @@ export function createOrganizationTableConfig(
         label: "View Details",
         icon: Eye,
         onClick: (organization) => {
-          window.location.href = `/admin/organization/${organization.slug}`
+          onViewOrganization?.(organization)
         },
       },
       {

@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { User } from "better-auth/types";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -25,6 +26,7 @@ interface DangerZoneProps {
 }
 
 export function DangerZone({ user }: DangerZoneProps) {
+    const router = useRouter();
     const [confirmEmail, setConfirmEmail] = useState("");
     const [isDeleting, setIsDeleting] = useState(false);
     const [isExporting, setIsExporting] = useState(false);
@@ -50,7 +52,7 @@ export function DangerZone({ user }: DangerZoneProps) {
             await authClient.signOut();
             
             // Redirect to home page
-            window.location.href = "/";
+            router.push("/");
         } catch (error: any) {
             toast.error("Failed to delete account. Please contact support.");
         } finally {
