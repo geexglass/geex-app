@@ -10,6 +10,7 @@ import PortableText from "@/app/components/PortableText";
 import { sanityFetch } from "@/sanity/lib/live";
 import { postPagesSlugs, postQuery } from "@/sanity/lib/queries";
 import { resolveOpenGraphImage } from "@/sanity/lib/utils";
+import type { PostQueryResult } from "@/sanity.types";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -43,7 +44,7 @@ export async function generateMetadata(
     params,
     // Metadata should never contain stega
     stega: false,
-  });
+  }) as { data: PostQueryResult };
   const previousImages = (await parent).openGraph?.images || [];
   const ogImage = resolveOpenGraphImage(post?.coverImage);
 
@@ -64,7 +65,7 @@ export default async function PostPage(props: Props) {
   const params = await props.params;
   const [{ data: post }] = await Promise.all([
     sanityFetch({ query: postQuery, params }),
-  ]);
+  ]) as [{ data: PostQueryResult }];
 
   if (!post?._id) {
     return notFound();
