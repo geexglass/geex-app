@@ -35,7 +35,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
     params,
     // Metadata should never contain stega
     stega: false,
-  });
+  }) as { data: GetPageQueryResult };
 
   return {
     title: page?.name,
@@ -47,7 +47,7 @@ export default async function Page(props: Props) {
   const params = await props.params;
   const [{ data: page }] = await Promise.all([
     sanityFetch({ query: getPageQuery, params }),
-  ]);
+  ]) as [{ data: GetPageQueryResult }];
 
   if (!page?._id) {
     return (

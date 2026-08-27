@@ -3,6 +3,7 @@ import Link from "next/link";
 import { sanityFetch } from "@/sanity/lib/live";
 import { morePostsQuery, allPostsQuery } from "@/sanity/lib/queries";
 import { Post as PostType } from "@/sanity.types";
+import type { AllPostsQueryResult, MorePostsQueryResult } from "@/sanity.types";
 import DateComponent from "@/app/components/Date";
 
 const Post = ({ post }: { post: PostType }) => {
@@ -66,7 +67,7 @@ export const MorePosts = async ({
   const { data } = await sanityFetch({
     query: morePostsQuery,
     params: { skip, limit },
-  });
+  }) as { data: MorePostsQueryResult };
 
   if (!data || data.length === 0) {
     return null;
@@ -80,7 +81,7 @@ export const MorePosts = async ({
 };
 
 export const AllPosts = async () => {
-  const { data } = await sanityFetch({ query: allPostsQuery });
+  const { data } = await sanityFetch({ query: allPostsQuery }) as { data: AllPostsQueryResult };
 
   if (!data || data.length === 0) {
     return <p>No posts found.</p>;

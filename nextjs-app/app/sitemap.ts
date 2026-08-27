@@ -2,6 +2,7 @@ import { MetadataRoute } from "next";
 import { sanityFetch } from "@/sanity/lib/live";
 import { sitemapData } from "@/sanity/lib/queries";
 import { headers } from "next/headers";
+import type { SitemapDataResult } from "@/sanity.types";
 
 /**
  * This file creates a sitemap (sitemap.xml) for the application. Learn more about sitemaps in Next.js here: https://nextjs.org/docs/app/api-reference/file-conventions/metadata/sitemap
@@ -11,7 +12,7 @@ import { headers } from "next/headers";
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const allPostsAndPages = await sanityFetch({
     query: sitemapData,
-  });
+  }) as { data: SitemapDataResult };
   const headersList = await headers();
   const sitemap: MetadataRoute.Sitemap = [];
   const domain: String = headersList.get("host") as string;

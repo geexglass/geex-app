@@ -15,6 +15,7 @@ import * as demo from "@/sanity/lib/demo";
 import { sanityFetch, SanityLive } from "@/sanity/lib/live";
 import { settingsQuery } from "@/sanity/lib/queries";
 import { resolveOpenGraphImage } from "@/sanity/lib/utils";
+import type { SettingsQueryResult } from "@/sanity.types";
 import { handleError } from "./client-utils";
 
 /**
@@ -26,7 +27,7 @@ export async function generateMetadata(): Promise<Metadata> {
     query: settingsQuery,
     // Metadata should never contain stega
     stega: false,
-  });
+  }) as { data: SettingsQueryResult };
   const title = settings?.title || demo.title;
   const description = settings?.description || demo.description;
 
