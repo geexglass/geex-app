@@ -3,7 +3,7 @@ import nextCoreWebVitals from "eslint-config-next/core-web-vitals";
 const nextConfig = [
 	...nextCoreWebVitals,
 	{
-		ignores: ["sanity.types.ts"],
+		ignores: ["sanity.types.ts", ".next/**", "out/**"],
 	},
 	{
 		rules: {

@@ -16,5 +16,4 @@ const live = defineLive({
 });
 
 // Keep app code stable across next-sanity major changes until query typing is fully migrated.
-export const sanityFetch = live.sanityFetch as any;
-export const SanityLive = live.SanityLive as any;
+export const { sanityFetch, SanityLive } = live;
