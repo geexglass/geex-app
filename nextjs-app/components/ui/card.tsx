@@ -2,6 +2,26 @@ import * as React from "react"
 
 import { cn } from "@/lib/utils"
 
+// export const Card = ({
+//   className = '',
+//   fullHeight = true,
+//   children,
+// }: {
+//   className?: string
+//   fullHeight?: boolean
+//   children: React.ReactNode
+// }) => (
+//   <div
+//     style={{ borderRadius: '20px' }}
+//     className={twMerge(
+//       `bg-white p-4 md:p-5 ${fullHeight ? 'h-full' : ''} gap-4 flex flex-col`,
+//       className,
+//     )}
+//   >
+//     {children}
+//   </div>
+// )
+
 const Card = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
@@ -9,7 +29,7 @@ const Card = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "rounded-xl border bg-card text-card-foreground shadow-sm",
+      "bg-white p-4 md:p-5 gap-4 flex flex-col rounded-2xl",
       className
     )}
     {...props}
