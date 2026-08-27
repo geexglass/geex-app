@@ -1,4 +1,3 @@
-import {CogIcon} from '@sanity/icons'
 import {defineArrayMember, defineField, defineType} from 'sanity'
 
 import * as demo from '../../lib/initialValues'
@@ -12,7 +11,6 @@ export const settings = defineType({
   name: 'settings',
   title: 'Settings',
   type: 'document',
-  icon: CogIcon,
   fields: [
     defineField({
       name: 'title',

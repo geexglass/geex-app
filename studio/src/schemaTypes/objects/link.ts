@@ -1,5 +1,4 @@
 import {defineField, defineType} from 'sanity'
-import {LinkIcon} from '@sanity/icons'
 
 /**
  * Link schema object. This link object lets the user first select the type of link and then
@@ -11,7 +10,6 @@ export const link = defineType({
   name: 'link',
   title: 'Link',
   type: 'object',
-  icon: LinkIcon,
   fields: [
     defineField({
       name: 'linkType',

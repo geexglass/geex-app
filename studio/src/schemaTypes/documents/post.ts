@@ -1,4 +1,3 @@
-import {DocumentTextIcon} from '@sanity/icons'
 import {format, parseISO} from 'date-fns'
 import {defineField, defineType} from 'sanity'
 
@@ -10,7 +9,6 @@ import {defineField, defineType} from 'sanity'
 export const post = defineType({
   name: 'post',
   title: 'Post',
-  icon: DocumentTextIcon,
   type: 'document',
   fields: [
     defineField({

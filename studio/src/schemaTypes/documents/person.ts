@@ -1,4 +1,3 @@
-import {UserIcon} from '@sanity/icons'
 import {defineField, defineType} from 'sanity'
 
 /**
@@ -9,7 +8,6 @@ import {defineField, defineType} from 'sanity'
 export const person = defineType({
   name: 'person',
   title: 'Person',
-  icon: UserIcon,
   type: 'document',
   fields: [
     defineField({

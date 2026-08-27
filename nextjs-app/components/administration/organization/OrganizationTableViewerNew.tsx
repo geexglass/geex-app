@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 import { Organization } from "better-auth/plugins"
 import { DataTable } from "@/components/shared/DataTable"
 import { createOrganizationTableConfig } from "./OrganizationTableConfig"
@@ -11,6 +12,7 @@ interface OrganizationTableViewerProps {
 }
 
 export default function OrganizationTableViewer({ organizations }: OrganizationTableViewerProps) {
+  const router = useRouter()
   const [orgList, setOrgList] = useState(organizations)
 
   const handleOrganizationCreated = (newOrganization: Organization) => {
@@ -23,6 +25,7 @@ export default function OrganizationTableViewer({ organizations }: OrganizationT
 
   const tableConfig = createOrganizationTableConfig(orgList, {
     onOrganizationDeleted: handleOrganizationDeleted,
+    onViewOrganization: (organization) => router.push(`/admin/organization/${organization.slug}`),
   })
 
   return (
